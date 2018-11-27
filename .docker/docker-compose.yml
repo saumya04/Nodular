@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+    nodular_webserver:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        container_name: nodular_node
+        restart: always
+        ports:
+            - "${DOCKER_NODE_HOST_PORT}:${DOCKER_NODE_TARGET_PORT}"
+        volumes:
+            - ../:/usr/src/app
+            # - ../package.json:/usr/src/app
+            # - ../node_modules:/usr/src/app
+            # - ../.sequelizerc:/usr/src/app
+            # - ./docker-server-entrypoint.sh:/usr/src/app
+        depends_on:
+            - nodular_mysql
+
+    nodular_mysql:
+        image: mysql:5.7
+        container_name: nodular_mysql
+        volumes:
+            - "./data/mysql:/var/lib/mysql"
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=${DOCKER_MYSQL_ROOT_PASSWORD}
+            - MYSQL_DATABASE=${DOCKER_MYSQL_DATABASE}
+            - MYSQL_USER=${DOCKER_MYSQL_USER}
+            - MYSQL_PASSWORD=${DOCKER_MYSQL_PASSWORD}
+        ports:
+            - "${DOCKER_MYSQL_HOST_PORT}:${DOCKER_MYSQL_TARGET_PORT}"
