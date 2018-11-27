@@ -3,7 +3,6 @@ const passportJWT = require("passport-jwt");
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const User = require('../../models/User');
-const UnauthorizedError = require('../../errors/UnauthorizedError');
 
 let jwtOptions = {
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
@@ -11,7 +10,6 @@ let jwtOptions = {
 }
 
 var strategy = new JWTStrategy(jwtOptions, function (jwtPayload, next) {
-    console.log('payload received [JWT]', jwtPayload);
     // usually this would be a database call:
     User.findById(jwtPayload.id)
         .then((user) => {

@@ -1,9 +1,7 @@
-const Models = require('../models');
-const Transformers = require('./index');
 const ApplicationError = require('../errors/ApplicationError');
 
 class BaseTransformer {
-    
+
     constructor(req, data, transformOptions = null) {
         if (this.constructor === BaseTransformer) {
             throw new TypeError('Abstract class "BaseTransformer" cannot be instantiated directly.');
@@ -13,8 +11,7 @@ class BaseTransformer {
         this.transformOptions = transformOptions;
         this.paramKey = App.helpers.config('settings.transformer.paramKey');
         this.params = req.getParam(this.paramKey);
-        // console.log('param key', this.paramKey, this.params);
-        this.allQueryParams = (! App.lodash.isEmpty(this.params)) ? this.params.split(',').filter(Boolean) : [];
+        this.allQueryParams = (!App.lodash.isEmpty(this.params)) ? this.params.split(',').filter(Boolean) : [];
     }
 
     async getTimestamps() {
@@ -32,17 +29,14 @@ class BaseTransformer {
     }
 
     async getAll() {
-        // let includesData = await this.getIncludeData();
         return Promise.all([
             this.transform(this.data),
             this.getTimestamps(),
-            // this.getIncludeData(),
         ])
-        .then(async ([transformed, timestamps]) => {
-            let includesData = (App.helpers.getObjProp(this.transformOptions, 'excludeIncludes')) ? {} : await this.getIncludeData();
-            // console.log('includesData: ', includesData, App.helpers.cloneObj(transformed, timestamps, includesData));
-            return App.helpers.cloneObj(transformed, timestamps, includesData);
-        })
+            .then(async ([transformed, timestamps]) => {
+                let includesData = (App.helpers.getObjProp(this.transformOptions, 'excludeIncludes')) ? {} : await this.getIncludeData();
+                return App.helpers.cloneObj(transformed, timestamps, includesData);
+            })
     }
 
     async getIncludeData() {
@@ -54,7 +48,7 @@ class BaseTransformer {
         let includesArr = [];
 
         App.lodash.forIn(this.model.getIncludes(), (value, key) => {
-            if(value.isDefault || App.lodash.indexOf(populateArr, value.as) >= 0) {
+            if (value.isDefault || App.lodash.indexOf(populateArr, value.as) >= 0) {
                 includesArr.push({
                     modelStr: App.helpers.config(`models.${value.model}`),
                     as: value.as,
@@ -66,8 +60,6 @@ class BaseTransformer {
 
         includesArr.forEach(
             async (obj, index, array) => {
-                // console.log(App.chalk.inverse.red('includes obj........'), obj);
-                let transformerObj = Transformers[obj.modelStr];
                 const includeMethod = App.helpers.toCamelCase(`include ${obj.as}`);
 
                 if (App.lodash.isUndefined(this[includeMethod])) {
@@ -98,49 +90,30 @@ class BaseTransformer {
                         includesDataPromise = [this[includeMethod].call(this, this.data.owner_type, this.data[obj.as])];
                     } else {
                         if (this.data.hasOwnProperty(obj.as)) {
-                            includesDataPromise = [ this[includeMethod].call(this, this.data[obj.as]) ];
+                            includesDataPromise = [this[includeMethod].call(this, this.data[obj.as])];
                         } else {
-                            // console.log('991', obj);
-                            // this.data = await this.data;
-                            // console.log('obj.funcName---------->', obj.funcName, this.data)
                             let includeData = this.data[obj.funcName]().then(res => res);
                             this.data[obj.as] = includeData;
-                            // if(App.lodash.isArray(includeData)) {
-                            //     includesDataPromise = [];
-                            //     let prArr = includeData.map(async (d) => {
-                            //         return await this[includeMethod].call(this, d);
-                            //     });
-                            //     includesDataPromise = [prArr];
-                            // } else {
-                            //     // includesDataPromise = [includeData];
-                            // }
-                            includesDataPromise = [ this[includeMethod].call(this, includeData) ];
+                            includesDataPromise = [this[includeMethod].call(this, includeData)];
                         }
                     }
                 }
 
                 let intermediatePromise = Promise.all(includesDataPromise)
                     .then((dData) => {
-                        // console.log('$$$$$$$$$$$$$', obj.as, dData);
                         return {
                             type: obj.as,
                             data: (App.lodash.isArray(this.data[obj.as])) ? dData : dData.pop()
                         };
                     });
 
-                // allPromise = this[includeMethod].call(this, this.data.dataValues[obj.as]);
-                allPromise = [ ...allPromise, intermediatePromise ];
+                allPromise = [...allPromise, intermediatePromise];
             }
         );
 
-        // console.log('--------------><--------------', allPromise.length);
-        
         return Promise.all(allPromise)
             .then(data => {
-                // console.log('FINAL DATA--------->', data);
                 data.forEach(d => {
-                    // console.log('d.type--------->', d.type);
-                    // finalData[d.type] = (d.data.length === 1) ? d.data.pop() : d.data;
                     finalData[d.type] = d.data;
                 });
                 return finalData;

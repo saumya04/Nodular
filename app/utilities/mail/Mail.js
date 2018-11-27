@@ -12,17 +12,6 @@ class Mail {
                 pass: App.env.MAIL_PASSWORD || null,
             }
         });
-
-        console.log("============Initialized Mail Class============");
-        console.log({
-            host: App.env.MAIL_HOST || null,
-            port: App.env.MAIL_PORT || null,
-            secure: (App.env.MAIL_PORT === '465') ? true : false,
-            auth: {
-                user: App.env.MAIL_USERNAME || null,
-                pass: App.env.MAIL_PASSWORD || null,
-            }
-        });
     }
 
     /**
@@ -61,15 +50,12 @@ class Mail {
             options.from = `${App.env.MAIL_DEFAULT_SENDER_NAME} <${App.env.MAIL_DEFAULT_SENDER_EMAIL}>`;
         }
 
-        console.log(options);
-
         return this.transporter.sendMail(options)
             .then(data => {
                 Mail.log(options.to, data);
                 return data;
             })
             .catch(error => {
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>", error);
                 return error;
             });
     }
@@ -85,7 +71,6 @@ class Mail {
      */
     sendToAdmins(options) {
         options.to = App.env.ADMIN_EMAILS && App.env.ADMIN_EMAILS.split(',');
-        console.log('options', options);
         return this.send(options);
     }
 
@@ -101,17 +86,6 @@ class Mail {
                     response: response.response
                 }
         });
-        // sails.logger.emailResponseLogger.info('email response', {
-        //   to: emails,
-        //   error: response instanceof Error ? true : false,
-        //   results: response instanceof Error ? {
-        //     message: response.message,
-        //     response: JSON.stringify(response)
-        //   } : {
-        //     messageId: response.messageId,
-        //     response: response.response
-        //   }
-        // });
     }
 
 

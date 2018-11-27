@@ -25,13 +25,12 @@ class FCM {
 
     send(params, registrationIds, options = null) {
         options = {
-            priority: App.helpers.getObjProp(options, 'priority', 'high'),
+            priority: App.helpers.getObjProp(options, 'priority', 'high'), // Setting up the priority
             sound: App.helpers.getObjProp(options, 'sound', 'default'), // For notification sound
             click_action: App.helpers.getObjProp(options, 'click_action', 'FCM_PLUGIN_ACTIVITY'), // Must be present for Android
             icon: App.helpers.getObjProp(options, 'icon', 'fcm_push_icon') // White icon Android resource
         };
 
-        let token = registrationIds;
         if (App.helpers.isArray(registrationIds)) {
             token = JSON.stringify(registrationIds);
         }
@@ -56,7 +55,6 @@ class FCM {
                 click_action: App.helpers.getObjProp(options, 'click_action'),
                 icon: App.helpers.getObjProp(options, 'icon'),
             },
-            // to: token,
         });
 
         // Adding data param if exists
@@ -69,7 +67,7 @@ class FCM {
         }
 
         return this.axiosInstance.post(sendUrl, notificationPayload).then((res) => {
-            // Logging fcm response
+            // Logging fcm response -- inside 'storage/logs/fcm.log' file
             let logMsgObj = {
                 tokens: registrationIds,
                 firebaseResponse: App.helpers.getObjProp(res, 'data'),
