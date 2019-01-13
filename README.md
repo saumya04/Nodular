@@ -1,6 +1,6 @@
 # Nodular Backend App - NodeJS
 
-![nodular logo](public/images/logo.png?raw=true | width=200 "nodular")
+![nodular logo](public/images/logo.png?raw=true | width=200)
 A *"modular" / "nodular"* Node.js App using [Express 4](http://expressjs.com/) to serve APIs & web-based views.
 
 ## Overall App Structure
