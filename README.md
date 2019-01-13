@@ -1,6 +1,6 @@
 # Nodular Backend App - NodeJS
 
-![nodular logo](public/images/logo.png?raw=true | width=200)
+<img src="https://raw.githubusercontent.com/saumya04/Nodular/master/public/images/logo.png"  width="200" alt="nodular logo">
 
 A *"modular" / "nodular"* Node.js App using [Express 4](http://expressjs.com/) to serve APIs & web-based views.
 
