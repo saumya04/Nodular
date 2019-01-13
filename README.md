@@ -1,3 +1,5 @@
+![nodular logo](public/images/logo.png?raw=true "nodular")
+
 # Nodular Backend App - NodeJS
 
 A *"modular" / "nodular"* Node.js App using [Express 4](http://expressjs.com/) to serve APIs & web-based views.
