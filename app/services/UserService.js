@@ -14,7 +14,7 @@ class UserService {
 
     
     /**
-     * Authenticate user for passed credentials
+     * Get User from DB with the specified criteria
      * @param {Object} params
      */
     async getUser(id, criteria = {}) {

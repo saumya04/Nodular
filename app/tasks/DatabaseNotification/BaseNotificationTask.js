@@ -1,6 +1,8 @@
 class BaseNotificationTask {
 
-    constructor() {
+    constructor(req, data) {
+        this.req = req;
+        this.data = data;
     }
 
     async getTransformedData(req, data, transformer, transformOptions = { excludeIncludes: true }) {
@@ -19,6 +21,14 @@ class BaseNotificationTask {
         return (new transformer(req, data, transformOptions)).init();
     }
 
+    // Method responsible to get back the data for certain type of notificaiton
+    async getData() {}
+
 }
 
 module.exports = BaseNotificationTask;
+
+/**
+ * let notif = new SomeNotification(req, data);
+ * notif.getData(); -----> gives data from certain notification
+ */

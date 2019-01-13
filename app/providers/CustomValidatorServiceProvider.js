@@ -21,7 +21,6 @@ var CustomValidator = require('../validators/CustomValidator');
   CustomValidator.init('datetime', 'validateDateTime');
   CustomValidator.init('json', 'validateJson');
   CustomValidator.init('json_format', 'validateJsonFormat', true);
-  CustomValidator.init('student_program_document_sessions', 'validateStudentProgramDocumentSessions');
   CustomValidator.init('in_bool', 'validateInBool');
   
 })();

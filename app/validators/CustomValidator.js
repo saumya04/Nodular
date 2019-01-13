@@ -466,37 +466,6 @@ class CustomValidator {
     }
 
     /**
-     * Check if the provided value is a valid Doc Session JSON format
-     *
-     * @param  string value
-     * @param  string attribute
-     * @param  string requirement
-     * @return boolean
-     */
-    static validateStudentProgramDocumentSessions(
-        value,
-        requirement,
-        attribute
-    ) {
-        try {
-            let docSessions = JSON.parse(JSON.stringify(value));
-
-            if (!App.lodash.isArray(docSessions)) {
-                return false;
-            }
-            let filteredArr = docSessions.filter(session => {
-                let date = App.helpers.getObjProp(session, "date");
-                let time = App.helpers.getObjProp(session, "time");
-                return moment(date + " " + time).isValid();
-            });
-
-            return filteredArr.length === docSessions.length;
-        } catch (e) {
-            return false;
-        }
-    }
-
-    /**
      * Check if the provided value is a valid JSON format as per given type
      *
      * @param  string value
