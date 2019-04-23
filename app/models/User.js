@@ -104,7 +104,7 @@ class User extends BaseModel {
     // ===============================
 
     static hooks(models) {
-        models.User.hook('afterCreate', (user, options) => {
+        models.User.addHook('afterCreate', (user, options) => {
             const middlewares = require('../http/middlewares');
             middlewares.firebaseService.insert(`users/${user.uuid}`, {
                 unread_notifications_count: 0
