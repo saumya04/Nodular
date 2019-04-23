@@ -2,7 +2,6 @@ const AuthMiddleware = require('./auth');
 const ApiSecretMiddleware = require('./api-secret');
 const GeneralMiddleware = require('./general');
 const ResponseMacroMiddleware = require('./responses');
-const isAdmin = require('./isAdmin');
 const RequestInterceptorMiddleware = require('./request-interceptor');
 const SessionMiddleware = require('./session');
 const UserLoginMiddleware = require('./user-login');
@@ -19,7 +18,6 @@ module.exports = {
     session: SessionMiddleware,
     apiSecret: ApiSecretMiddleware,
     requestInterceptor: RequestInterceptorMiddleware,
-    isAdmin: isAdmin,
     hasRole: HasRole,
     auth: {
         jwt: AuthMiddleware.jwt,

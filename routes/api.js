@@ -22,7 +22,6 @@ module.exports = {
     },
 
 
-    ...userRoutes,
     ...authRoutes,
     ...adminRoutes,
     ...studentRoutes,

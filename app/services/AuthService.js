@@ -1,6 +1,5 @@
 const AuthValidator = require("../validators/AuthValidator");
 const UserRepository = require("../repositories/UserRepository");
-const FcmTokenRepository = require("../repositories/FcmTokenRepository");
 const bcrypt = require("bcrypt");
 const GenericError = require("../errors/GenericError");
 const Models = require('../models');
@@ -19,7 +18,6 @@ class AuthService {
         this.req = req;
         this.authValidator = new AuthValidator();
         this.userRepo = new UserRepository(req);
-        this.fcmTokenRepo = new FcmTokenRepository(req);
     }
 
     /**
