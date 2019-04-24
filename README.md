@@ -3,6 +3,7 @@
 <img src="https://raw.githubusercontent.com/saumya04/Nodular/master/public/images/logo.png"  width="200" alt="nodular logo">
 
 A *"modular" / "nodular"* Node.js App using [Express 4](http://expressjs.com/) to serve APIs & web-based views.
+A breif of this structure can be found in this [article](http://bit.ly/nodular)
 
 ## Overall App Structure
 
