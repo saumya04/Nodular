@@ -32,7 +32,7 @@
     "fs": "0.0.1-security",
     "image-size": "^0.6.3",
     "jsonwebtoken": "^8.3.0",
-    "locutus": "^2.0.12",
+    "locutus": "^2.0.15",
     "lusca": "^1.6.0",
     "moment": "^2.22.2",
     "morgan": "^1.9.0",
