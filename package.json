@@ -26,7 +26,7 @@
     "express": "^4.16.3",
     "express-async-handler": "^1.1.3",
     "express-session": "^1.15.6",
-    "express-status-monitor": "^1.1.4",
+    "express-status-monitor": "^1.3.4",
     "file-type": "^9.0.0",
     "firebase": "^5.5.0",
     "fs": "0.0.1-security",
